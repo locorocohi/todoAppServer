@@ -1,8 +1,8 @@
-import { Entity, PrimaryColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 @Entity('todos')
 export class Todo {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number
 
     @Column()
