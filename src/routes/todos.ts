@@ -1,12 +1,14 @@
 import express from "express";
-import { addTask } from "../controllers/todosController";
+import { addTask, editTask, findTaskById, getArrayWithTodos, deleteTask, deleteCompleted } from "../controllers/todosController";
+import { todosRepo } from "../db";
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-  res.send('results')
-})
-
+router.get('/', getArrayWithTodos)
+router.get('/:id', findTaskById)
+router.put('/:id', editTask)
+router.delete('/:id', deleteTask)
+router.delete('/clearCompleted', deleteCompleted)
 router.post('/create', addTask)
 
 export default router
