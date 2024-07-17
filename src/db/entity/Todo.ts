@@ -10,5 +10,4 @@ export class Todo {
     
     @Column()
     completed: boolean
-
 }
