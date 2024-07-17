@@ -1,16 +1,15 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { Todo } from "./entity/Todo"
-import dotenv from 'dotenv'
-dotenv.config()
+import config from '../config'
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: process.env.HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: config.host,
+    port: config.db.port,
+    username: config.db.username,
+    password: config.db.password,
+    database: config.db.name,
     synchronize: true,
     logging: false,
     entities: [Todo],
