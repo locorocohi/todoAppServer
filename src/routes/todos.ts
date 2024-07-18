@@ -1,6 +1,11 @@
 import express from "express";
-import { addTask, editTask, findTaskById, getArrayWithTodos, deleteTask, deleteCompleted } from "../controllers/todosController";
-import { todosRepo } from "../db";
+import { 
+  addTask, 
+  editTask, 
+  findTaskById, 
+  getArrayWithTodos, 
+  deleteTask, 
+  deleteCompleted } from "../controllers/todosController";
 
 const router = express.Router()
 

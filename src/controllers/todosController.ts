@@ -2,23 +2,33 @@ import { Todo } from "../db/entity/Todo";
 import { todosRepo } from "../db";
 import type { RequestHandler } from 'express';
 import asyncHandler from "express-async-handler";
+import { CustomError } from "../errors/customError"
 
 export const addTask: RequestHandler = asyncHandler(async (req, res, next) => {
   const newTodo = new Todo();
   newTodo.text = req.body.text;
   newTodo.completed = req.body.completed;
+  if(!req.body.text || !req.body.completed) {
+    throw new CustomError({statusCode: 400, message: `Required property "text" or "completed" not entered`})
+  }
   await todosRepo.save(newTodo)
   res.json('Done!')
 })
 
 export const getArrayWithTodos: RequestHandler = asyncHandler(async (req, res, next) => {
   const todosArr = await todosRepo.find()
+  if(todosArr.length === 0) {
+    throw new CustomError({statusCode: 404, message: `There are not any tasks`})
+  }
   res.json(todosArr)
 })
 
 export const findTaskById: RequestHandler = asyncHandler(async (req, res, next) => {
   const taskId = req.params.id
   const currTask = await todosRepo.findOneBy({id: taskId})
+  if(!currTask) {
+    throw new CustomError({statusCode: 404, message: `Task with id:${taskId} not found!`})
+  }
   res.json(currTask)
 })
 
