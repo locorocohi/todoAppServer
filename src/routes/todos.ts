@@ -16,4 +16,4 @@ router.delete('/:id', deleteTask)
 router.delete('/clearCompleted', deleteCompleted)
 router.post('/create', addTask)
 
-export default router
+export default router;

@@ -15,4 +15,4 @@ export const AppDataSource = new DataSource({
     entities: [Todo],
     migrations: [],
     subscribers: [],
-})
+});

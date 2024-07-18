@@ -10,3 +10,5 @@ app.use('/api', mainRouter);
 app.use(myOwnErrorHandler)
 
 export default app;
+
+// CORS
