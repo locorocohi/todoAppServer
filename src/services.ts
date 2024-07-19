@@ -2,6 +2,7 @@ import { todosRepo } from "./db";
 import { CustomError } from "./errors/customError";
 import errorsConstants from "./errors/errorsConstants";
 import { Todo } from "./db/entity/Todo";
+import { TodoType } from "./models/Todo";
 
 export const findTaskByIdAndThrow = async (id) => {
   const currTask = await todosRepo.findOneBy({id: id});
@@ -27,11 +28,11 @@ export const createTaskAndThrow = async (req) => {
 }
 
 
-export const findCompletedAndThrow = async () => {
+export const findCompletedAndThrow = async (): Promise<TodoType[]> => {
   const completedTasks = await todosRepo.find({where: {completed: true},})
   
   if (!completedTasks.length) {
-    throw new CustomError(errorsConstants.NOT_FOUND);
+    return [];
   }
 
   return completedTasks;
@@ -39,7 +40,11 @@ export const findCompletedAndThrow = async () => {
 
 
 export const findAllAndThrow = async () => {
-  const todosArr = await todosRepo.find()
+  const todosArr = await todosRepo.find({
+    order: { 
+    id: 'ASC'
+  }})
+  
   if(!todosArr) {
     throw new CustomError(errorsConstants.NOT_FOUND)
   };
