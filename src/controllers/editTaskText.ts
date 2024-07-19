@@ -15,7 +15,7 @@ export const editTask: RequestHandler = asyncHandler(async (req, res, next) => {
     throw new CustomError(errorsConstants.BAD_REQUEST)
   };
 
-  currTask.text = req.body.text ?? currTask.text;
+  currTask.text = req.body.text;
   const savedTodo = await todosRepo.save(currTask);
   res.status(200).json(savedTodo);
 })

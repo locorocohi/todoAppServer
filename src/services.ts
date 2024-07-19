@@ -40,7 +40,7 @@ export const findCompletedAndThrow = async () => {
 
 export const findAllAndThrow = async () => {
   const todosArr = await todosRepo.find()
-  if(!todosArr.length) {
+  if(!todosArr) {
     throw new CustomError(errorsConstants.NOT_FOUND)
   };
 
