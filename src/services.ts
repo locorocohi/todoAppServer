@@ -27,11 +27,34 @@ export const createTaskAndThrow = async (req) => {
 }
 
 
-export const deleteSomeItems = async (arrayWithPromices) => {
-  for(const item of arrayWithPromices) {
-    const deletedItem = await todosRepo.delete(item)
-    if(deletedItem) {
-      throw new CustomError(errorsConstants.NOT_FOUND)
-    }
+export const findCompletedAndThrow = async () => {
+  const completedTasks = await todosRepo.find({where: {completed: true},})
+  
+  if (!completedTasks.length) {
+    throw new CustomError(errorsConstants.NOT_FOUND);
   }
+
+  return completedTasks;
+}
+
+
+export const findAllAndThrow = async () => {
+  const todosArr = await todosRepo.find()
+  if(!todosArr.length) {
+    throw new CustomError(errorsConstants.NOT_FOUND)
+  };
+
+  return todosArr;
+}
+
+export const toggleCompleteAll = async (array) => {
+  const isSomeTasksCompleted = array.some((item) => !item.completed);
+  const result = []
+  for (let i = 0; i < array.length; i+=1) {
+    let item  = array[i]
+    item.completed = isSomeTasksCompleted
+    result[i] = await todosRepo.save(item)
+  }
+
+  return result;
 }
